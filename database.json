@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "driver": "pg",
+        "host": "127.0.0.1",
+        "database": "shopstore_api",
+        "user": "3to1dash",
+        "password": "5937865562",
+        "port": "5432"
+    },
+    "test": {
+        "driver": "pg",
+        "host": "127.0.0.1",
+        "database": "shopstore_api_test",
+        "user": "3to1dash",
+        "password": "5937865562",
+        "port": "5432"
+    },
+    "sql-file" : true
+}
