@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "node src/server.ts",
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
+    "start": "ENV=dev node src/server.ts",
+    "watch": "ENV=dev tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "build": "npx tsc",
     "jasmine": "npx jasmine-ts",
     "test": "bash ./test.sh",
