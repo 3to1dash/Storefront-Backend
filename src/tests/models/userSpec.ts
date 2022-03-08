@@ -1,4 +1,5 @@
 import { User, UserStore } from '../../models/user';
+import { resetTables } from '../helpers/dbHelpers';
 
 const store = new UserStore();
 
@@ -18,10 +19,14 @@ describe('User Model', () => {
 
     beforeAll(() => {
       user = {
-        firstname: 'Mahmoud',
-        lastname: 'Ahmed',
-        password: 'password123'
+        firstname: 'Foo',
+        lastname: 'Bar',
+        password: 'password'
       };
+    });
+
+    afterAll(async () => {
+      await resetTables();
     });
 
     it('create method should add a user', async () => {
