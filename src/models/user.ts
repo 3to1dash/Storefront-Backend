@@ -8,7 +8,7 @@ export type User = {
 };
 
 export class UserStore {
-  async index(): Promise<User[]> {
+  async index(): Promise<User[] | null> {
     try {
       const conn = await client.connect();
       const sql = 'Select * From users';
@@ -23,7 +23,7 @@ export class UserStore {
     }
   }
 
-  async show(id: string): Promise<User> {
+  async show(id: string): Promise<User | null> {
     try {
       const conn = await client.connect();
       const sql = 'Select * From users Where id=($1)';
@@ -34,15 +34,15 @@ export class UserStore {
 
       return result.rows[0];
     } catch (error) {
-      throw new Error(`Could not get users. Error: ${error}`);
+      throw new Error(`Could not get user. Error: ${error}`);
     }
   }
 
-  async create(user: User): Promise<User> {
+  async create(user: User): Promise<User | null> {
     try {
       const conn = await client.connect();
-      const sql =
-        'Insert Into users(firstname, lastname, password) Values($1, $2, $3) RETURNING *';
+      const sql = `Insert Into users (firstname, lastname, password) 
+        Values ($1, $2, $3) RETURNING *`;
 
       const result = await conn.query<User>(sql, [
         user.firstname,
@@ -54,7 +54,7 @@ export class UserStore {
 
       return result.rows[0];
     } catch (error) {
-      throw new Error(`Could not get users. Error: ${error}`);
+      throw new Error(`Could not save user. Error: ${error}`);
     }
   }
 }
