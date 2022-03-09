@@ -23,7 +23,7 @@ const auth = async (req: Request, res: Response): Promise<void> => {
 };
 
 const authRoutes = (app: express.Application) => {
-  app.get('/auth', auth);
+  app.post('/auth', auth);
 };
 
 export default authRoutes;

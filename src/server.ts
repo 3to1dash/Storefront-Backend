@@ -1,8 +1,9 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './handlers/users';
+import authRoutes from './handlers/auth';
 
-const app: express.Application = express();
+export const app: express.Application = express();
 const address = '0.0.0.0:3000';
 
 app.use(bodyParser.json());
@@ -12,6 +13,7 @@ app.get('/', function (req: Request, res: Response) {
 });
 
 userRoutes(app);
+authRoutes(app);
 
 app.listen(3000, function () {
   console.log(`starting app on: ${address}`);

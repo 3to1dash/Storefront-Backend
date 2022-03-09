@@ -16,7 +16,7 @@ export class UserStore {
   async index(): Promise<User[] | null> {
     try {
       const conn = await client.connect();
-      const sql = 'Select * From users';
+      const sql = 'Select id, firstname, lastname From users';
 
       const result = await conn.query<User>(sql);
 
@@ -31,7 +31,7 @@ export class UserStore {
   async show(id: string): Promise<User | null> {
     try {
       const conn = await client.connect();
-      const sql = 'Select * From users Where id=($1)';
+      const sql = 'Select id, firstname, lastname From users Where id=($1)';
 
       const result = await conn.query<User>(sql, [id]);
 
@@ -47,7 +47,7 @@ export class UserStore {
     try {
       const conn = await client.connect();
       const sql = `Insert Into users (firstname, lastname, password_digest) 
-        Values ($1, $2, $3) Returning *`;
+        Values ($1, $2, $3) Returning id, firstname, lastname`;
 
       const { BCRYPT_SECRET, SALT_ROUNDS } = process.env;
       const hash = bcrypt.hashSync(
@@ -70,14 +70,14 @@ export class UserStore {
   }
 
   static async authenticate(
-    user_id: string,
+    username: string,
     password: string
   ): Promise<User | null> {
     try {
       const conn = await client.connect();
-      const sql = 'Select * from users where id = ($1)';
+      const sql = 'Select * from users where firstname = ($1)';
 
-      const result = await conn.query(sql, [user_id]);
+      const result = await conn.query(sql, [username]);
 
       const { BCRYPT_SECRET } = process.env;
 

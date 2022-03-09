@@ -20,8 +20,7 @@ describe('User Model', () => {
     beforeAll(() => {
       user = {
         firstname: 'Foo',
-        lastname: 'Bar',
-        password: 'password'
+        lastname: 'Bar'
       };
     });
 
@@ -30,7 +29,7 @@ describe('User Model', () => {
     });
 
     it('create method should add a user', async () => {
-      const result = await store.create(user);
+      const result = await store.create(user, 'password');
 
       expect(result).toEqual({ id: 1, ...user });
     });

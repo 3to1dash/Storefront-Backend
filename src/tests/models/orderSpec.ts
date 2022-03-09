@@ -24,11 +24,13 @@ describe('Order Model', () => {
     let product: Product;
 
     beforeAll(async () => {
-      user = (await userStore.create({
-        firstname: 'Zoo',
-        lastname: 'Bar',
-        password: 'password'
-      })) as User;
+      user = (await userStore.create(
+        {
+          firstname: 'Zoo',
+          lastname: 'Bar'
+        },
+        'password'
+      )) as User;
 
       product = (await productStore.create({
         name: 'tea',
