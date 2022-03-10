@@ -3,40 +3,184 @@ The company stakeholders want to create an online storefront to showcase their g
 
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
 
-## API Endpoints
-#### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+## Endpoints
+### Authentication
+#### Generate a JWT
 
-#### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+```
+POST /auth
+```
 
-#### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+#### Parameters
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| username | `String` | <p>User firstname</p> |
+| password | `String` | <p>User password</p> |
+
+### Users Endpoints
+#### Create User
+
+```
+POST /users
+```
+
+#### Parameters
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| firstname | `String` | <p>User firstname</p> |
+| lastname | `String` | <p>User lastname</p> |
+| password | `String` | <p>User password</p> |
+
+#### Get User
+
+```
+GET /users/:id
+```
+
+#### Headers
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| Authorization | `String` | <p>User jwt obtained from /auth endpoint</p> |
+
+#### Parameters
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| id | `String` | <p>User id</p> |
+
+#### Get All Users
+
+```
+GET /users
+```
+
+#### Headers
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| Authorization | `String` | <p>User jwt obtained from /auth endpoint</p> |
+
+### Products Endpoints
+#### Create Product
+
+```
+POST /products
+```
+#### Headers
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| Authorization | `String` | <p>User jwt obtained from /auth endpoint</p> |
+
+#### Parameters
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| name | `String` | <p>Product name</p> |
+| price | `Number` | <p>Product price</p> |
+| category | `String` | <p>Product category</p> |
+
+#### Get Product
+
+```
+GET /products/:id
+```
+#### Parameters
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| id | `String` | <p>Product id</p> |
+
+#### Get All Product
+
+```
+GET /products
+```
+### Orders Endpoints
+#### Create Order
+
+```
+POST /orders
+```
+#### Headers
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| Authorization | `String` | <p>User jwt obtained from /auth endpoint</p> |
+
+#### Parameters
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| quantity | `Number` | <p>Order quantity</p> |
+| status | `String` | <p>Order status</p> |
+| user_id | `Number` | <p>User's foreign key for the order</p> |
+| product_id | `Number` | <p>Product's foreign key for the order</p> |
+
+#### Get all orders by user
+
+```
+GET /orders/user/:user_id
+```
+#### Headers
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| Authorization | `String` | <p>User jwt obtained from /auth endpoint</p> |
+
+#### Parameters
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| user_id | `Number` | <p>Order's user id</p> |
+
+#### Get all orders by user and status
+
+```
+GET /orders/:status/user/:user_id
+```
+#### Headers
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| Authorization | `String` | <p>User jwt obtained from /auth endpoint</p> |
+
+#### Parameters
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| user_id | `Number` | <p>Order's user id</p> |
+| status | `String` | <p>Order status</p> |
 
 ## Data Shapes
-#### Product
--  id
-- name
-- price
-- [OPTIONAL] category
+### Database Schema & it's related routes
 
-#### User
-- id
-- firstName
-- lastName
-- password
+### Users
 
-#### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+| Column   | Type       | Description | Nullable | Constraint                  |
+|----------|------------|-------------|----------|-----------------------------|
+| id | `SERIAL` | <p>User Id</p> | No | Primary Key & Unique |
+| password_digest | `VARCHAR` | <p>User's hashed password</p> | No | None |
+| firstname | `VARCHAR(64)` | <p>User's First name</p> | No | None |
+| lastname | `VARCHAR(64)` | <p>User's Last name</p> | No | None |
 
+### Products
+
+| Column   | Type       | Description | Nullable | Constraint                  |
+|----------|------------|-------------|----------|-----------------------------|
+| id | `SERIAL` | <p>Product Id</p> | No | Primary Key & Unique |
+| name | `VARCHAR(100)` | <p>Product name</p> | No | None |
+| price | `INT` | <p>Product Price</p> | No | None |
+| category | `VARCHAR(100)` | <p>Product category</p> | Yes | None |
+
+### Orders
+
+| Column   | Type       | Description | Nullable | Constraint                  |
+|----------|------------|-------------|----------|-----------------------------|
+| id | `SERIAL` | <p>Order Id</p> | No | Primary Key & Unique |
+| status | `VARCHAR(64)` | <p>Order Status</p> | No | None |
+| user_id | `INT` | <p>User ID</p> | No | FK to `id` in `Users` |
+| product_id | `INT` | <p>Product ID</p> | No | FK to `id` in `Products` |
