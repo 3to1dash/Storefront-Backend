@@ -32,7 +32,7 @@ describe('Users Endpoints', () => {
       token = response.body;
     });
 
-    describe('get /users', () => {
+    describe('GET /users', () => {
       it('should retrieve a list of users and return 200 status code', async () => {
         await request('http://localhost:3000')
           .get('/users')
@@ -42,7 +42,7 @@ describe('Users Endpoints', () => {
       });
     });
 
-    describe('get /users/:id', () => {
+    describe('GET /users/:id', () => {
       it('should retrieve a users given its id and return 200 status code', async () => {
         const user_id = 1;
         await request('http://localhost:3000')

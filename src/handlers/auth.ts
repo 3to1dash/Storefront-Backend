@@ -13,6 +13,8 @@ const auth = async (req: Request, res: Response): Promise<void> => {
       req.body.username,
       req.body.password
     );
+    if (!user) throw new Error('Could not authenticate user');
+
     const { TOKEN_SECRET } = process.env;
 
     const token = jwt.sign({ user: user }, TOKEN_SECRET as string);
