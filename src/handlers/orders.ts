@@ -19,8 +19,9 @@ const create = async (req: Request, res: Response): Promise<void> => {
       quantity: req.body.quantity,
       user_id: req.body.user_id,
       product_id: req.body.product_id,
-      status: 'active'
+      status: req.body.status || 'active'
     };
+
     const newOrder = await store.create(order);
     res.status(201).json(newOrder);
   } catch (error) {
