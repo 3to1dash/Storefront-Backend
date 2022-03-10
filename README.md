@@ -6,6 +6,16 @@
 
 2. Update the variables in `.env` && `.env.test` according to your needs
 
+## PORTS
+
+- Dev server port: `3000`
+
+- Dev db port: `5432`
+
+- Test server port: `3000`
+
+- Test db port: `5431`
+
 ## Setup for development
 1. To run the development docker container
 
@@ -56,7 +66,7 @@ To check the database tables [db_tables.md](./db_tables.md).
 
 ```
     POSTGRES_HOST=127.0.0.1
-    POSTGRES_PORT=5432
+    POSTGRES_PORT=5431
     POSTGRES_USER=3to1dash
     POSTGRES_PASSWORD=5937865562
     POSTGRES_DB=shopfront_api_test
