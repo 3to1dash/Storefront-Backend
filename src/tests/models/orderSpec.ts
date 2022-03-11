@@ -1,4 +1,4 @@
-import { Order, OrderStore } from '../../models/order';
+import { Order, OrderStore, Status } from '../../models/order';
 import { User, UserStore } from '../../models/user';
 import { Product, ProductStore } from '../../models/product';
 import { resetTables } from '../helpers/dbHelpers';
@@ -8,14 +8,20 @@ const userStore = new UserStore();
 const productStore = new ProductStore();
 
 describe('Order Model', () => {
-  it('should have a ordersByUser method', () => {
+  it('should have an ordersByUser method', () => {
     expect(orderStore.ordersByUser).toBeDefined();
   });
-  it('should have a ordersByUserAndStatus method', () => {
+  it('should have an ordersByUserAndStatus method', () => {
     expect(orderStore.ordersByUserAndStatus).toBeDefined();
   });
-  it('should have an create method', () => {
+  it('should have a create method', () => {
     expect(orderStore.create).toBeDefined();
+  });
+  it('should have an addProduct method', () => {
+    expect(orderStore.addProduct).toBeDefined();
+  });
+  it('should have an IsOrderActive method', () => {
+    expect(orderStore.IsOrderActive).toBeDefined();
   });
 
   describe('Data access methods should interact properly with the database', () => {
@@ -39,10 +45,8 @@ describe('Order Model', () => {
       })) as Product;
 
       order = {
-        quantity: 5,
         user_id: user.id ? user.id : 1,
-        product_id: product.id ? product.id : 1,
-        status: 'active'
+        status: Status.Active
       };
     });
 
@@ -52,6 +56,19 @@ describe('Order Model', () => {
 
     it('create method should add an order', async () => {
       const result = await orderStore.create(order);
+
+      expect(result).toEqual({ id: 1, ...order });
+    });
+
+    it('IsOrderActive method should return an order if it is active', async () => {
+      const result = await orderStore.IsOrderActive(1);
+
+      expect(result).toEqual({ id: 1, ...order });
+    });
+
+    it('addProduct method should add an order product and return the order', async () => {
+      const product_id = product.id ? product.id : 1;
+      const result = await orderStore.addProduct(4, 1, product_id);
 
       expect(result).toEqual({ id: 1, ...order });
     });

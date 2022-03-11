@@ -4,7 +4,7 @@
 
 1. To install required dependencies run `yarn`
 
-2. Update the variables in `.env` && `.env.test` according to your needs
+2. Update the variables in `.env` && `.env.test` with your values
 
 ## PORTS
 
@@ -14,38 +14,34 @@
 
 - Test server port: `3000`
 
-- Test db port: `5431`
+- Test db port: `5432`
 
 ## Setup for development
 1. To run the development docker container
 
-    $ npm run docker:up
+        $ npm run docker:up
 
 2. To run the development migrations
 
-    $ npm run db:up
+        $ npm run db:up
 
 3. To run build and run the server
 
-    $ npm run server
+        $ npm run server
 
 After finishing testing the api run:
 
 4. To drop the development database
 
-    $ npm run db:drop
+        $ npm run db:drop
 
 5. To stop and remove the development docker container
 
-    $ npm run docker:down
+        $ npm run docker:down
 
-## API Endpoints
+## API Endpoints And DB Tables
 
-To check the api endpoints [endpoints.md](./endpoints.md.md).
-
-## DB Schema
-
-To check the database tables [db_tables.md](./db_tables.md).
+To check the api endpoints and the database tables open: [REQUIREMENTS.md](./REQUIREMENTS.md).
 
 ## Environment Variables
 ### Dev
@@ -66,7 +62,7 @@ To check the database tables [db_tables.md](./db_tables.md).
 
 ```
     POSTGRES_HOST=127.0.0.1
-    POSTGRES_PORT=5431
+    POSTGRES_PORT=5432
     POSTGRES_USER=3to1dash
     POSTGRES_PASSWORD=5937865562
     POSTGRES_DB=shopfront_api_test
@@ -79,18 +75,18 @@ To check the database tables [db_tables.md](./db_tables.md).
 ## Steps to run the test suites
 1. To run the development docker container
 
-    $ npm run docker:test:up
+        $ npm run docker:test:up
 
 2. To run build and run the server
 
-    $ npm run server:test
+        $ npm run server:test
 
 3. To run the test Suites
 
-    $ npm run test
+        $ npm run test
 
 After finishing testing the api run:
 
 4. To stop and remove the testing docker container
 
-    $ npm run docker:test:down
+        $ npm run docker:test:down

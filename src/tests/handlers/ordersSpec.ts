@@ -14,9 +14,7 @@ const user = {
 };
 
 const order = {
-  quantity: 5,
   user_id: 1,
-  product_id: 1,
   status: 'active'
 };
 
@@ -51,10 +49,26 @@ describe('Orders Endpoints', () => {
         .expect(201);
     });
 
-    it('POST /orders should not save order with valid token and return 401 status code', async () => {
+    it('POST /orders should not save order without token and return 401 status code', async () => {
       await request('http://localhost:3000')
         .post('/orders')
         .send(order)
+        .expect(401);
+    });
+
+    it('POST /orders/:id/products should save order product with valid token and return 201 status code', async () => {
+      await request('http://localhost:3000')
+        .post(`/orders/${1}/products`)
+        .auth(token, { type: 'bearer' })
+        .send({ quantity: 4, order_id: 1, product_id: 1 })
+        .expect('Content-Type', /json/)
+        .expect(201);
+    });
+
+    it('POST /orders/:id/products should not save order product without token and return 401 status code', async () => {
+      await request('http://localhost:3000')
+        .post(`/orders/${1}/products`)
+        .send({ quantity: 4, order_id: 1, product_id: 1 })
         .expect(401);
     });
   });
@@ -63,7 +77,7 @@ describe('Orders Endpoints', () => {
     it('GET /orders/user/:user_id should return 200 status code with valid token', async () => {
       const user_id = order.user_id;
       await request('http://localhost:3000')
-        .get(`/orders/user/${user_id}`)
+        .get(`/orders/users/${user_id}`)
         .auth(token, { type: 'bearer' })
         .expect('Content-Type', /json/)
         .expect(200);
@@ -71,7 +85,7 @@ describe('Orders Endpoints', () => {
     it('GET /orders/user/:user_id should return 401 status code without token', async () => {
       const user_id = order.user_id;
       await request('http://localhost:3000')
-        .get(`/orders/user/${user_id}`)
+        .get(`/orders/users/${user_id}`)
         .expect(401);
     });
 
@@ -80,7 +94,7 @@ describe('Orders Endpoints', () => {
       const status = order.status;
 
       await request('http://localhost:3000')
-        .get(`/orders/${status}/user/${user_id}`)
+        .get(`/orders/${status}/users/${user_id}`)
         .auth(token, { type: 'bearer' })
         .expect('Content-Type', /json/)
         .expect(200);
@@ -90,7 +104,7 @@ describe('Orders Endpoints', () => {
       const status = order.status;
 
       await request('http://localhost:3000')
-        .get(`/orders/${status}/user/${user_id}`)
+        .get(`/orders/${status}/users/${user_id}`)
         .expect(401);
     });
   });

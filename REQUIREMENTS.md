@@ -115,10 +115,27 @@ POST /orders
 
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
-| quantity | `Number` | <p>Order quantity</p> |
 | status | `String` | <p>Order status</p> |
 | user_id | `Number` | <p>User's foreign key for the order</p> |
-| product_id | `Number` | <p>Product's foreign key for the order</p> |
+
+#### Add products to the order
+
+```
+POST /orders/:id/products
+```
+#### Headers
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| Authorization | `String` | <p>User jwt obtained from /auth endpoint</p> |
+
+#### Parameters
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| quantity | `Number` | <p>Order quantity</p> |
+| order_id | `Number` | <p>Order id</p> |
+| product_id | `Number` | <p>Product id</p> |
 
 #### Get all orders by user
 
@@ -183,4 +200,12 @@ GET /orders/:status/user/:user_id
 | id | `SERIAL` | <p>Order Id</p> | No | Primary Key & Unique |
 | status | `VARCHAR(64)` | <p>Order Status</p> | No | None |
 | user_id | `INT` | <p>User ID</p> | No | FK to `id` in `Users` |
+
+### Order_Products
+
+| Column   | Type       | Description | Nullable | Constraint                  |
+|----------|------------|-------------|----------|-----------------------------|
+| id | `SERIAL` | <p>Order_Product Id</p> | No | Primary Key & Unique |
+| quantity | `INT` | <p>Product quantity</p> | No | None |
 | product_id | `INT` | <p>Product ID</p> | No | FK to `id` in `Products` |
+| order_id | `INT` | <p>Order ID</p> | No | FK to `id` in `Orders` |
