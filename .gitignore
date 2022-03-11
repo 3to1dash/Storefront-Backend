@@ -5,6 +5,10 @@
 # Dependencies
 /node_modules
 
+# Environment files
+.env
+.env.test
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
