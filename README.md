@@ -16,28 +16,39 @@
 
 - Test db port: `5432`
 
+## Database setup for development
+1. **Create user**
+``` sh
+        Create User 3to1dash With Password '5937865562';
+```
+
+2. **Create the development and test databases**
+``` sh
+        Create database shopfront_api;
+        Create database shopfront_api_test;
+```
+
+3. **Grant all databases privileges to user in both databases**
+``` sh
+        Grant All Privileges On Database shopfront_api To 3to1dash;
+        Grant All Privileges On Database shopfront_api_test To 3to1dash;
+```
+
 ## Setup for development
-1. To run the development docker container
 
-        $ npm run docker:up
-
-2. To run the development migrations
+1. To run the development migrations
 
         $ npm run db:up
 
-3. To run build and run the server
+2. To run build and run the server
 
         $ npm run server
 
 After finishing testing the api run:
 
-4. To drop the development database
+3. To drop the development database
 
         $ npm run db:drop
-
-5. To stop and remove the development docker container
-
-        $ npm run docker:down
 
 ## API Endpoints And DB Tables
 
@@ -73,20 +84,10 @@ To check the api endpoints and the database tables open: [REQUIREMENTS.md](./REQ
 ```
 
 ## Steps to run the test suites
-1. To run the development docker container
-
-        $ npm run docker:test:up
-
-2. To run build and run the server
+1. To run build and run the server
 
         $ npm run server:test
 
-3. To run the test Suites
+2. To run the test Suites
 
         $ npm run test
-
-After finishing testing the api run:
-
-4. To stop and remove the testing docker container
-
-        $ npm run docker:test:down
